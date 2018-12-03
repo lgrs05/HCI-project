@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class DummyAuth {
     private static final HashMap<String, User> USERS = new HashMap<>();
     static{
+        USERS.put("test", new User("test", "Luis", "Rivera", "test", false));
         USERS.put("foo@example.com", new User("foo@example.com", "Luis", "Rivera", "hello", false));
         USERS.put("bar@example.com", new User("bar@example.com", "Ernesto", "Sanchez", "world", true));
 
@@ -23,6 +24,10 @@ public class DummyAuth {
         if(!USERS.containsKey(email)) return null;
         currentUser = USERS.get(email).getPassword().equals(password)? USERS.get(email) : null;
         return currentUser;
+    }
+
+    public static void logout(){
+        currentUser = null;
     }
 
     public static User getCurrentUser(){

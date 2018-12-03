@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="majors">
+        <item>ICOM</item>
+        <item>INEL</item>
+        <item>ININ</item>
+        <item>INME</item>
+        <item>INQU</item>
+        <item>INCI</item>
+        <item>INSO</item>
+    </string-array>
+</resources>

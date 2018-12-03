@@ -3,6 +3,7 @@ package com.hci.hci_project;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -26,7 +27,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -59,6 +62,10 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private EditText firstNameView;
+    private EditText lastNameView;
+    private Spinner majorView;
+    private CheckBox isProfessorView;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -90,8 +97,29 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             }
         });
 
+        Button loginButton = (Button) findViewById(R.id.loginButton);
+        final Intent loginIntent = new Intent(this, LoginActivity.class);
+        loginButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(loginIntent);
+            }
+        });
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        majorView = findViewById(R.id.spinner);
+// Create an ArrayAdapter using the string array and a default spinner layout
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+//                R.array.majors, android.R.layout.simple_spinner_item);
+//// Specify the layout to use when the list of choices appears
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//// Apply the adapter to the spinner
+//        majorView.setAdapter(adapter);
+        firstNameView = findViewById(R.id.firstName);
+        lastNameView = findViewById(R.id.lastName);
+        isProfessorView = findViewById(R.id.isProfessor);
+
     }
 
     private void populateAutoComplete() {
@@ -151,13 +179,34 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        firstNameView.setError(null);
+        lastNameView.setError(null);
+
+
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String firstName = firstNameView.getText().toString();
+        String lastName = lastNameView.getText().toString();
+        String major = majorView.getSelectedItem().toString();
+        boolean isProfessor = isProfessorView.isChecked();
 
         boolean cancel = false;
         View focusView = null;
+
+        //Check first name and last name
+        if(TextUtils.isEmpty(firstName)){
+            firstNameView.setError(getString(R.string.error_field_required));
+            focusView = firstNameView;
+            cancel = true;
+        }
+
+        if(TextUtils.isEmpty(lastName)){
+            lastNameView.setError(getString(R.string.error_field_required));
+            focusView = lastNameView;
+            cancel = true;
+        }
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
@@ -177,6 +226,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             cancel = true;
         }
 
+
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -187,12 +238,17 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+
+            DummyAuth.register(firstName, lastName, email, password, isProfessor);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
     }
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+
+        return email.contains("@") && !DummyAuth.emailExists(email);
     }
 
     private boolean isPasswordValid(String password) {
