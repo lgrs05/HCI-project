@@ -9,21 +9,17 @@
             android:icon="@drawable/ic_chat_bubble_black_24dp"
             android:title="@string/conversations" />
         <item
-            android:id="@+id/courses"
+            android:id="@+id/past_courses"
             android:icon="@drawable/ic_class_black_24dp"
-            android:title="Courses" />
+            android:title="PastCourses" />
         <item
-            android:id="@+id/resources"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Resource Library" />
+            android:id="@+id/current_courses"
+            android:icon="@drawable/ic_class_black_24dp"
+            android:title="Current Courses" />
         <item
             android:id="@+id/tutors"
             android:icon="@drawable/ic_people_black_24dp"
             android:title="Tutors" />
-        <item
-            android:id="@+id/settings"
-            android:icon="@drawable/ic_settings_black_24dp"
-            android:title="Settings" />
         <item
             android:id="@+id/log_out"
             android:icon="@drawable/ic_exit_to_app_black_24dp"

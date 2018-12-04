@@ -239,7 +239,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
 
-            DummyAuth.register(firstName, lastName, email, password, isProfessor);
+            DummyAuth.register(firstName, lastName, email, password, isProfessor, major);
             Intent intent = new Intent(this, CoursesTakenActivity.class);
             startActivity(intent);
         }

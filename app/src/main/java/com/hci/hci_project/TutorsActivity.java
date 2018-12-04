@@ -1,29 +1,37 @@
 package com.hci.hci_project;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ConversationFragment.OnListFragmentInteractionListener {
+import java.util.Map;
+
+public class TutorsActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, TutorsFragment.OnListFragmentInteractionListener {
 
     private RecyclerView mRecyclerView;
+    private SearchView searchView;
+    private MyTutorsRecyclerViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_tutors);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -38,29 +46,35 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavBarActivity(this, (DrawerLayout) findViewById(R.id.drawer_layout), navigationView));
-//        ImageView fab = navigationView.getHeaderView(0).findViewById(R.id.imageView);
-//
-//        View.OnClickListener listener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(intent);
-//            }
-//        };
-//
-//        fab.setOnClickListener(listener);
-//
-//
-//
-//        TextView name = navigationView.getHeaderView(0).findViewById(R.id.user_name);
-//        name.setText(String.format("%s %s", DummyAuth.getCurrentUser().getFirst(), DummyAuth.getCurrentUser().getLast()));
-//        name.setOnClickListener(listener);
-//        TextView email = navigationView.getHeaderView(0).findViewById(R.id.user_email);
-//        email.setText(DummyAuth.getCurrentUser().getEmail());
-//        email.setOnClickListener(listener);
+//        setUpNavBarProfile(intent, navigationView);
+
+        mRecyclerView = findViewById(R.id.list);
+        mAdapter = (MyTutorsRecyclerViewAdapter) mRecyclerView.getAdapter();
 
 
 
 
+    }
+
+    private void setUpNavBarProfile(final Intent intent, NavigationView navigationView) {
+        ImageView fab = navigationView.getHeaderView(0).findViewById(R.id.imageView);
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(intent);
+            }
+        };
+
+        fab.setOnClickListener(listener);
+
+
+        TextView name = navigationView.getHeaderView(0).findViewById(R.id.user_name);
+        name.setText(String.format("%s %s", DummyAuth.getCurrentUser().getFirst(), DummyAuth.getCurrentUser().getLast()));
+        name.setOnClickListener(listener);
+        TextView email = navigationView.getHeaderView(0).findViewById(R.id.user_email);
+        email.setText(DummyAuth.getCurrentUser().getEmail());
+        email.setOnClickListener(listener);
     }
 
     @Override
@@ -77,8 +91,31 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filter recycler view when query submitted
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filter recycler view when text is changed
+                mAdapter.getFilter().filter(query);
+                return false;
+            }
+        });
+        return true;    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -89,6 +126,9 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.action_search) {
             return true;
         }
 
@@ -121,9 +161,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(User item) {
-        MessagesActivity.setUser(item);
-        Intent intent = new Intent(this, MessagesActivity.class);
+    public void onListFragmentInteraction(Map.Entry<User, String> item) {
+        ProfileActivity.setTargetUser(item.getKey());
+        ProfileActivity.setCourseTutoring(item.getValue());
+        Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
 //        Log.d("email: ",item.getEmail());
 

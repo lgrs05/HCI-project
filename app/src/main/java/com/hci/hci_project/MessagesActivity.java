@@ -43,7 +43,7 @@ public class MessagesActivity extends AppCompatActivity implements RoomListener 
         setContentView(R.layout.activity_message);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        setTitle(target.getName());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -52,7 +52,7 @@ public class MessagesActivity extends AppCompatActivity implements RoomListener 
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavBarActivity(this, (DrawerLayout) findViewById(R.id.drawer_layout)));
+        navigationView.setNavigationItemSelectedListener(new NavBarActivity(this, (DrawerLayout) findViewById(R.id.drawer_layout), navigationView));
 
         messagesAdapter = new MessagesAdapter(this, target);
         messagesView = (ListView) findViewById(R.id.messages_view);
