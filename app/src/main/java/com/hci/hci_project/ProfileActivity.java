@@ -1,6 +1,5 @@
 package com.hci.hci_project;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,21 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity
+public class ProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        final Intent intent = new Intent(this, ProfileActivity.class);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -38,21 +33,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavBarActivity(this, (DrawerLayout) findViewById(R.id.drawer_layout)));
-        ImageView fab = navigationView.getHeaderView(0).findViewById(R.id.imageView);
 
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(intent);
-            }
-        };
-
-        fab.setOnClickListener(listener);
-
-        TextView name = navigationView.getHeaderView(0).findViewById(R.id.user_name);
-        name.setOnClickListener(listener);
-        TextView email = navigationView.getHeaderView(0).findViewById(R.id.user_email);
-        email.setOnClickListener(listener);
+        TextView fullName = findViewById(R.id.fullName);
+        fullName.setText(String.format("%s %s", DummyAuth.getCurrentUser().getFirst(), DummyAuth.getCurrentUser().getLast()));
+        TextView email = findViewById(R.id.userEmail);
+        email.setText(DummyAuth.getCurrentUser().getEmail());
     }
 
     @Override
@@ -68,7 +53,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.profile, menu);
         return true;
     }
 
