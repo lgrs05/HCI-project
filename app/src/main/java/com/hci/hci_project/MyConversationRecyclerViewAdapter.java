@@ -18,10 +18,10 @@ import java.util.List;
  */
 public class MyConversationRecyclerViewAdapter extends RecyclerView.Adapter<MyConversationRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<User> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyConversationRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyConversationRecyclerViewAdapter(List<User> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -36,8 +36,8 @@ public class MyConversationRecyclerViewAdapter extends RecyclerView.Adapter<MyCo
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(String.format("%s %s", mValues.get(position).getFirst(), mValues.get(position).getLast()));
+        holder.mContentView.setText(mValues.get(position).getEmail());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +60,7 @@ public class MyConversationRecyclerViewAdapter extends RecyclerView.Adapter<MyCo
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public User mItem;
 
         public ViewHolder(View view) {
             super(view);

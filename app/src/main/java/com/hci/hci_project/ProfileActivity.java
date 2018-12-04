@@ -1,9 +1,6 @@
 package com.hci.hci_project;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +13,9 @@ import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static User targetUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +34,25 @@ public class ProfileActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavBarActivity(this, (DrawerLayout) findViewById(R.id.drawer_layout)));
 
+        TextView navName = navigationView.getHeaderView(0).findViewById(R.id.user_name);
+        TextView navEmail = navigationView.getHeaderView(0).findViewById(R.id.user_email);
+        navEmail.setText(DummyAuth.getCurrentUser().getEmail());
+        navName.setText(String.format("%s %s", DummyAuth.getCurrentUser().getFirst(), DummyAuth.getCurrentUser().getLast()));
         TextView fullName = findViewById(R.id.fullName);
         fullName.setText(String.format("%s %s", DummyAuth.getCurrentUser().getFirst(), DummyAuth.getCurrentUser().getLast()));
         TextView email = findViewById(R.id.userEmail);
         email.setText(DummyAuth.getCurrentUser().getEmail());
+
+
+    }
+
+    public static void setTargetUser(User user){
+        targetUser = user;
+    }
+
+    public boolean isCurrentUserProfile(){
+        return targetUser == null? false :
+                targetUser.getEmail().equals(DummyAuth.getCurrentUser().getEmail());
     }
 
     @Override

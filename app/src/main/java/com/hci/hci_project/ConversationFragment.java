@@ -10,11 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hci.hci_project.dummy.DummyContent;
-import com.hci.hci_project.dummy.DummyContent.DummyItem;
-
-import java.util.List;
-
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -69,7 +64,7 @@ public class ConversationFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyConversationRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyConversationRecyclerViewAdapter(DummyAuth.getUsers(), mListener));
         }
         return view;
     }
@@ -104,6 +99,6 @@ public class ConversationFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(User item);
     }
 }

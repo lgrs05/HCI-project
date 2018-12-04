@@ -2,17 +2,55 @@ package com.hci.hci_project;
 
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class DummyAuth {
+
+    private static final HashMap<String, HashMap<String, List<Message>>> MESSAGES = new HashMap<>();
     private static final HashMap<String, User> USERS = new HashMap<>();
     static{
         USERS.put("test", new User("test", "Luis", "Rivera", "test", false));
         USERS.put("foo@example.com", new User("foo@example.com", "Luis", "Rivera", "hello", false));
         USERS.put("bar@example.com", new User("bar@example.com", "Ernesto", "Sanchez", "world", true));
+        USERS.put("hey@example.com", new User("hey@example.com", "Luis", "Rivera", "hello", false));
+        USERS.put("ba@example.com", new User("ba@example.com", "Ernesto", "Sanchez", "world", true));
+        USERS.put("fo@example.com", new User("fo@example.com", "Luis", "Rivera", "hello", false));
+        USERS.put("barr@example.com", new User("barr@example.com", "Ernesto", "Sanchez", "world", true));
+        USERS.put("heyy@example.com", new User("heyy@example.com", "Luis", "Rivera", "hello", false));
+        USERS.put("baa@example.com", new User("baa@example.com", "Ernesto", "Sanchez", "world", true));
 
     }
     protected static User currentUser;
+
+    public static void saveMessage(User target, Message message){
+        if(!MESSAGES.containsKey(currentUser.getEmail())){
+            createList(target);
+        }
+        MESSAGES.get(currentUser.getEmail()).get(target.getEmail()).add(message);
+    }
+
+    private static void createList(User target) {
+        HashMap<String, List<Message>> mMap = new HashMap<>();
+        mMap.put(target.getEmail(), new ArrayList<Message>());
+        MESSAGES.put(currentUser.getEmail(),mMap );
+    }
+
+    public static List<Message> getMessages(User target){
+        if(!MESSAGES.containsKey(currentUser.getEmail()) ||
+                !MESSAGES.get(currentUser.getEmail()).containsKey(target.getEmail())) {
+            createList(target);
+            return MESSAGES.get(currentUser.getEmail()).get(target.getEmail());
+        }
+
+        return MESSAGES.get(currentUser.getEmail()).get(target.getEmail());
+    }
+
+    public static ArrayList<User> getUsers(){
+        return new ArrayList<>(USERS.values());
+    }
 
     public static boolean register(String first, String last, String email, String password, boolean isProfessor){
         if(USERS.containsKey(email)) return false;

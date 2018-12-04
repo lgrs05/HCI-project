@@ -240,7 +240,7 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             mAuthTask.execute((Void) null);
 
             DummyAuth.register(firstName, lastName, email, password, isProfessor);
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, CoursesTakenActivity.class);
             startActivity(intent);
         }
     }

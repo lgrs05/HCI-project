@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ConversationFragment.OnListFragmentInteractionListener {
 
     private RecyclerView mRecyclerView;
 
@@ -52,10 +53,16 @@ public class MainActivity extends AppCompatActivity
 
         fab.setOnClickListener(listener);
 
+
+
         TextView name = navigationView.getHeaderView(0).findViewById(R.id.user_name);
+        name.setText(String.format("%s %s", DummyAuth.getCurrentUser().getFirst(), DummyAuth.getCurrentUser().getLast()));
         name.setOnClickListener(listener);
         TextView email = navigationView.getHeaderView(0).findViewById(R.id.user_email);
+        email.setText(DummyAuth.getCurrentUser().getEmail());
         email.setOnClickListener(listener);
+
+
 
 
     }
@@ -115,5 +122,14 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onListFragmentInteraction(User item) {
+        MessagesActivity.setUser(item);
+        Intent intent = new Intent(this, MessagesActivity.class);
+        startActivity(intent);
+//        Log.d("email: ",item.getEmail());
+
     }
 }

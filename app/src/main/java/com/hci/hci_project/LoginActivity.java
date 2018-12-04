@@ -181,7 +181,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(email,password)) {
+        if (TextUtils.isEmpty(password) && !isPasswordValid(email,password)) {
             mPasswordView.setError(getString(R.string.error_incorrect_password));
             focusView = mPasswordView;
             cancel = true;
@@ -208,6 +208,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+            DummyAuth.login(email, password);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
 
@@ -222,6 +223,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isPasswordValid(String email, String password) {
+        if(password == null) return false;
         //TODO: Replace this with your own logic
         currentUser = DummyAuth.login(email, password);
         return currentUser != null;

@@ -69,6 +69,11 @@ public class CoursesTakenActivity extends AppCompatActivity implements CoursesFr
 
     }
 
+    public void goToCurrent(MenuItem item){
+        Intent intent = new Intent (this, CurrentCoursesActivity.class);
+        startActivity(intent);
+    }
+
     public void gotoLogin(MenuItem item) {
         Intent intent = new Intent (this, LoginActivity.class);
         startActivity(intent);
