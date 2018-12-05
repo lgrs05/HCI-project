@@ -178,30 +178,20 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/send_message"
+
+        <Button
+            android:id="@+id/button"
+            style="?android:textAppearanceSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
             android:clickable="true"
-            android:orientation="horizontal"
-            android:paddingLeft="25dp"
-            >
-
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:src="@drawable/ic_forum_black_24dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="20dp"
-                android:text="Send a Message"
-                android:textStyle="bold" />
-        </LinearLayout>
+            android:drawableStart="@drawable/ic_chat_bubble_black_24dp"
+            android:drawablePadding="15dp"
+            android:onClick="goToChat"
+            android:text="Send Message"
+            android:textStyle="bold" />
     </LinearLayout>
 
 

@@ -69,6 +69,7 @@ public class DummyAuth {
     public static boolean register(String first, String last, String email, String password, boolean isProfessor, String major){
         if(USERS.containsKey(email)) return false;
         USERS.put(email, new User(email, first, last, password, isProfessor, major));
+        login(email, password);
         return true;
     }
 

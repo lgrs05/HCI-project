@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -51,21 +52,28 @@ public class ProfileActivity extends AppCompatActivity
         fullName.setText(String.format("%s %s", currUser.getFirst(), currUser.getLast()));
         TextView email = findViewById(R.id.userEmail);
         email.setText(currUser.getEmail());
-        LinearLayout messageButton = findViewById(R.id.send_message);
-        final Intent messageIntent = new Intent(this, MessagesActivity.class);
-        messageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MessagesActivity.setUser(targetUser);
-                startActivity(messageIntent);
 
-            }
-        });
+//        final Intent messageIntent = new Intent(this, MessagesActivity.class);
+//        messageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                MessagesActivity.setUser(targetUser);
+//                startActivity(messageIntent);
+//
+//            }
+//        });
+
         ableToSend();
 
         showTutoringCourse();
 
 
+    }
+
+    public void goToChat(View view){
+        final Intent messageIntent = new Intent(this, MessagesActivity.class);
+        MessagesActivity.setUser(targetUser);
+        startActivity(messageIntent);
     }
 
     private void showTutoringCourse() {
@@ -94,7 +102,7 @@ public class ProfileActivity extends AppCompatActivity
     }
 
     public void ableToSend(){
-        LinearLayout messageButton = findViewById(R.id.send_message);
+        Button messageButton = findViewById(R.id.button);
         if (isCurrentUserProfile()) {
             messageButton.setVisibility(View.GONE);
         } else {
