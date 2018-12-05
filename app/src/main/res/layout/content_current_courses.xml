@@ -8,4 +8,10 @@
     tools:context=".CurrentCoursesActivity"
     tools:showIn="@layout/activity_current_courses">
 
+    <fragment android:name="com.hci.hci_project.CurrentClassesFragment"
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
 </android.support.constraint.ConstraintLayout>

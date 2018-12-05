@@ -6,46 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.hci.hci_project.CurrentFragment.OnListFragmentInteractionListener;
+import com.hci.hci_project.CurrentClassesFragment.OnListFragmentInteractionListener;
 import com.hci.hci_project.dummy.DummyContent.DummyItem;
 
 import java.util.List;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyCurrentRecyclerViewAdapter extends RecyclerView.Adapter<MyCurrentRecyclerViewAdapter.ViewHolder> {
+public class MyCurrentClassesRecyclerViewAdapter extends RecyclerView.Adapter<MyCurrentClassesRecyclerViewAdapter.ViewHolder> {
 
     private final List<String> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyCurrentRecyclerViewAdapter(List<String> items, OnListFragmentInteractionListener listener) {
+    public MyCurrentClassesRecyclerViewAdapter(List<String> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -53,7 +29,7 @@ public class MyCurrentRecyclerViewAdapter extends RecyclerView.Adapter<MyCurrent
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
+                .inflate(R.layout.fragment_current, parent, false);
         return new ViewHolder(view);
     }
 

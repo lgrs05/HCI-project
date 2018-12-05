@@ -11,7 +11,7 @@
         <item
             android:id="@+id/past_courses"
             android:icon="@drawable/ic_class_black_24dp"
-            android:title="PastCourses" />
+            android:title="Courses Taken" />
         <item
             android:id="@+id/current_courses"
             android:icon="@drawable/ic_class_black_24dp"

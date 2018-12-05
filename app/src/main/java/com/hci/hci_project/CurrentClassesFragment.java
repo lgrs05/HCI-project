@@ -16,34 +16,13 @@ import com.hci.hci_project.dummy.DummyContent.DummyItem;
 import java.util.Arrays;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * A fragment representing a list of Items.
  * <p/>
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class CurrentFragment extends Fragment {
+public class CurrentClassesFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -55,7 +34,7 @@ public class CurrentFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public CurrentFragment() {
+    public CurrentClassesFragment() {
     }
 
     // TODO: Customize parameter initialization
@@ -89,9 +68,9 @@ public class CurrentFragment extends Fragment {
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
             }
-            recyclerView.setAdapter(new MyCurrentRecyclerViewAdapter(Arrays.asList("Calculus II", "Calculus III",
+            recyclerView.setAdapter(new MyCurrentClassesRecyclerViewAdapter(Arrays.asList("Calculus II", "Calculus III",
                     "Differential Equations", "Physics I", "Physics Lab I", "Physics II", "Physics Lab II", "Algorithms",
                     "Advanced Spanish 1", "Advanced Spanish 2", "Advanced English 1", "Advanced English 2"), mListener));
         }

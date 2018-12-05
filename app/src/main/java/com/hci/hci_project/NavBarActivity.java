@@ -57,9 +57,11 @@ public class NavBarActivity implements NavigationView.OnNavigationItemSelectedLi
             Intent intent = new Intent(currentActivity, MainActivity.class);
             currentActivity.startActivity(intent);
         } else if (id == R.id.past_courses) {
-//            Intent intent = new Intent(currentActivity, CoursesActivity.class);
+            Intent intent = new Intent(currentActivity, CoursesTakenActivity.class);
+            currentActivity.startActivity(intent);
         } else if (id == R.id.current_courses) {
-//            Intent intent = new Intent(currentActivity, ResourcesActivity.class);
+            Intent intent = new Intent(currentActivity, CurrentCoursesActivity.class);
+            currentActivity.startActivity(intent);
         } else if (id == R.id.tutors) {
             Intent intent = new Intent(currentActivity, TutorsActivity.class);
             currentActivity.startActivity(intent);

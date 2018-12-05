@@ -50,11 +50,8 @@ public class CoursesTakenActivity extends AppCompatActivity implements CoursesFr
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_item_one) {
 
-            // Do something
-            return true;
-        }
+
         if (id == R.id.action_item_two) {
 
             // Do something
@@ -74,8 +71,4 @@ public class CoursesTakenActivity extends AppCompatActivity implements CoursesFr
         startActivity(intent);
     }
 
-    public void gotoLogin(MenuItem item) {
-        Intent intent = new Intent (this, LoginActivity.class);
-        startActivity(intent);
-    }
 }
