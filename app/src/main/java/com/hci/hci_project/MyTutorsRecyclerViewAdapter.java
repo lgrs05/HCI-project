@@ -23,7 +23,7 @@ import java.util.Map;
 public class MyTutorsRecyclerViewAdapter extends RecyclerView.Adapter<MyTutorsRecyclerViewAdapter.ViewHolder> implements Filterable {
 
     private  List<Map.Entry<User, String>> mValues;
-    private  List<Map.Entry<User, String>> mValuesFiltered;
+    public   List<Map.Entry<User, String>> mValuesFiltered;
     private final OnListFragmentInteractionListener mListener;
 
     public MyTutorsRecyclerViewAdapter(List<Map.Entry<User, String>> items, OnListFragmentInteractionListener listener) {

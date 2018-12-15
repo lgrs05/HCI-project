@@ -1,10 +1,14 @@
 package com.hci.hci_project;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,11 +16,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Map;
 
@@ -51,9 +61,91 @@ public class TutorsActivity extends AppCompatActivity
         mRecyclerView = findViewById(R.id.list);
         mAdapter = (MyTutorsRecyclerViewAdapter) mRecyclerView.getAdapter();
 
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final String[] fonts = {"Precalculus I", "Precalculus II", "Calculus I", "Chemistry I",
+                        "Chemistry Lab I", "Chemistry II", "Chemistry Lab II", "Engineering Graphics", "Basic Spanish 1",
+                        "Basic Spanish 2", "Basic English 1", "Basic English 2", "Calculus II", "Calculus III",
+                        "Differential Equations", "Physics I","Physics Lab I", "Physics II", "Physics Lab II",
+                        "Algorithms","Advanced Spanish 1", "Advanced Spanish 2", "Advanced English 1",
+                        "Advanced English 2"};
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(TutorsActivity.this);
+                builder.setTitle("Select a Class to Tutor");
+                builder.setItems(fonts, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final int Which = which;
+                        mAdapter.mValuesFiltered.add(new Map.Entry<User, String>() {
+                            @Override
+                            public User getKey() {
+                                return DummyAuth.getCurrentUser();
+                            }
+
+                            @Override
+                            public String getValue() {
+                                return fonts[Which];
+                            }
+
+                            @Override
+                            public String setValue(String value) {
+                                return null;
+                            }
+                        });
+                        mAdapter.notifyDataSetChanged();
+//                        if ("Small".equals(fonts[which])){
+//                            Toast.makeText(TutorsActivity.this,"you nailed it", Toast.LENGTH_SHORT).show();
+//                        }
+//                        else if ("Medium".equals(fonts[which])){
+//                            Toast.makeText(TutorsActivity.this,"you cracked it", Toast.LENGTH_SHORT).show();
+//                        }
+//                        else if ("Large".equals(fonts[which])){
+//                            Toast.makeText(TutorsActivity.this,"you hacked it", Toast.LENGTH_SHORT).show();
+//                        }
+//                        else if ("Huge".equals(fonts[which])){
+//                            Toast.makeText(TutorsActivity.this,"you digged it", Toast.LENGTH_SHORT).show();
+//                        }
+                        // the user clicked on colors[which]
+
+                    }
+                });
+                builder.show();
+
+            }
+        });
 
 
 
+    }
+
+    public void onButtonShowPopupWindowClick(View view) {
+
+        // inflate the layout of the popup window
+        LayoutInflater inflater = (LayoutInflater)
+                getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_window, null);
+
+        // create the popup window
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        // show the popup window
+        // which view you pass in doesn't matter, it is only used for the window tolken
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        // dismiss the popup window when touched
+        popupView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return true;
+            }
+        });
     }
 
     private void setUpNavBarProfile(final Intent intent, NavigationView navigationView) {
@@ -167,6 +259,5 @@ public class TutorsActivity extends AppCompatActivity
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
 //        Log.d("email: ",item.getEmail());
-
     }
 }

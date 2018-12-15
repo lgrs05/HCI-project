@@ -10,6 +10,7 @@ import com.hci.hci_project.ConversationFragment.OnListFragmentInteractionListene
 import com.hci.hci_project.dummy.DummyContent.DummyItem;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
@@ -35,9 +36,20 @@ public class MyConversationRecyclerViewAdapter extends RecyclerView.Adapter<MyCo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+
+        String Classes[] = {
+                "Precalculus I", "Precalculus II", "Calculus I",
+                "Chemistry I", "Chemistry Lab I", "Chemistry II", "Chemistry Lab II", "Engineering Graphics", "Basic Spanish 1",
+                "Basic Spanish 2", "Basic English 1", "Basic English 2", "Calculus II", "Calculus III", "Differential Equations",
+                "Physics I","Physics Lab I", "Physics II", "Physics Lab II", "Algorithms","Advanced Spanish 1",
+                "Advanced Spanish 2", "Advanced English 1", "Advanced English 2"
+        };
+
+        int random = new Random().nextInt(24);
+
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(String.format("%s %s", mValues.get(position).getFirst(), mValues.get(position).getLast()));
-        holder.mContentView.setText(mValues.get(position).getEmail());
+        holder.mContentView.setText(Classes[random]);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
